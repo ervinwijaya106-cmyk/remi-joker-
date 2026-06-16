@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#1a3a1a" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Score Cekih" />
+  <title>Score Cekih — Sadewa Corp</title>
+  <link rel="icon" href="images/joker.ico" type="image/x-icon" />
+  <link rel="apple-touch-icon" href="images/joker.png" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- LOADING SCREEN -->
+<!-- ═══════════════════════════════════════════════ -->
+<div id="loading-screen">
+  <div class="loading-logo-wrap">
+    <img src="images/joker.png" alt="Joker Logo" class="loading-logo" id="loading-logo" />
+    <div class="loading-title">SCORE CEKIH</div>
+    <div class="loading-sub">by Sadewa Corp</div>
+    <div class="loading-bar-wrap">
+      <div class="loading-bar" id="loading-bar"></div>
+    </div>
+    <div class="loading-text" id="loading-text">Memuat aplikasi...</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- REWARD VIDEO OVERLAY -->
+<!-- ═══════════════════════════════════════════════ -->
+<div id="reward-overlay" class="hidden">
+  <video id="reward-video" playsinline></video>
+  <div id="reward-flash"></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- MAIN APP -->
+<!-- ═══════════════════════════════════════════════ -->
+<div id="app" class="hidden">
+
+  <!-- Card suit overlay -->
+  <div class="suit-overlay" aria-hidden="true">
+    <span>♠</span><span>♥</span><span>♦</span><span>♣</span>
+    <span>♠</span><span>♥</span><span>♦</span><span>♣</span>
+    <span>♠</span><span>♥</span><span>♦</span><span>♣</span>
+    <span>♠</span><span>♥</span><span>♦</span><span>♣</span>
+    <span>♠</span><span>♥</span><span>♦</span><span>♣</span>
+    <span>♠</span><span>♥</span><span>♦</span><span>♣</span>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SETUP PAGE -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div id="page-setup" class="page">
+    <div class="setup-wrap">
+      <div class="setup-header">
+        <img src="images/joker.png" alt="Logo" class="setup-logo" />
+        <h1 class="setup-title">SCORE CEKIH</h1>
+        <p class="setup-sub">by Sadewa Corp</p>
+      </div>
+      <div class="setup-form">
+        <div class="setup-section-title">Nama Pemain</div>
+        <div class="setup-players">
+          <div class="setup-player-row">
+            <span class="setup-player-badge dragon-badge">🐉 P1</span>
+            <input type="text" id="setup-p1" placeholder="Nama Pemain 1" maxlength="16" class="setup-input" />
+          </div>
+          <div class="setup-player-row">
+            <span class="setup-player-badge tiger-badge">🐯 P2</span>
+            <input type="text" id="setup-p2" placeholder="Nama Pemain 2" maxlength="16" class="setup-input" />
+          </div>
+          <div class="setup-player-row">
+            <span class="setup-player-badge eagle-badge">🦅 P3</span>
+            <input type="text" id="setup-p3" placeholder="Nama Pemain 3" maxlength="16" class="setup-input" />
+          </div>
+          <div class="setup-player-row">
+            <span class="setup-player-badge cobra-badge">🐍 P4</span>
+            <input type="text" id="setup-p4" placeholder="Nama Pemain 4" maxlength="16" class="setup-input" />
+          </div>
+        </div>
+        <div class="setup-section-title">Target Kemenangan</div>
+        <div class="setup-target-row">
+          <button class="target-btn" data-val="500">500</button>
+          <button class="target-btn active" data-val="1000">1000</button>
+          <button class="target-btn" data-val="750">750</button>
+          <button class="target-btn" data-val="1500">1500</button>
+        </div>
+        <div class="setup-target-custom">
+          <input type="number" id="setup-custom-target" placeholder="Custom target..." min="100" max="9999" class="setup-input" />
+        </div>
+        <button id="btn-start-game" class="btn-primary btn-full">🃏 MULAI PERMAINAN</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- GAME PAGE -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div id="page-game" class="page hidden">
+
+    <!-- Header -->
+    <div class="game-header">
+      <div class="header-left">
+        <img src="images/joker.png" alt="Logo" class="header-logo" />
+        <div class="header-info">
+          <div class="header-title">SCORE CEKIH</div>
+          <div class="header-round-turn" id="header-round-turn">Ronde 1 · Giliran 1</div>
+        </div>
+      </div>
+      <div class="header-right">
+        <button class="icon-btn" id="btn-bg-music" title="Musik">🎵</button>
+        <button class="icon-btn" id="btn-fullscreen" title="Fullscreen">⛶</button>
+        <button class="icon-btn" id="btn-screenshot" title="Screenshot">📸</button>
+      </div>
+    </div>
+
+    <!-- Player Cards Grid -->
+    <div class="cards-grid" id="cards-grid">
+      <!-- Cards rendered by JS -->
+    </div>
+
+    <!-- Burn Section -->
+    <div id="burn-section" class="burn-section hidden">
+      <div class="burn-title">🔥 Kandidat Bakar</div>
+      <div id="burn-candidates-list"></div>
+      <div class="burn-btns">
+        <button id="btn-open-burn" class="btn-burn">🔥 BURN</button>
+        <button id="btn-skip-burn" class="btn-skip">✖ Lewati</button>
+      </div>
+    </div>
+
+    <!-- Burn Modal -->
+    <div id="burn-modal" class="modal-overlay hidden">
+      <div class="modal-box">
+        <div class="modal-title">🔥 Konfirmasi Bakar</div>
+        <div id="burn-modal-list"></div>
+        <div class="modal-btns">
+          <button id="btn-confirm-burn" class="btn-primary">✅ KONFIRMASI BAKAR</button>
+          <button id="btn-cancel-burn" class="btn-secondary">✖ Batal</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-row">
+      <button id="btn-save-turn" class="btn-primary btn-save">💾 SIMPAN GILIRAN</button>
+      <button id="btn-undo" class="btn-secondary btn-undo">↩ UNDO</button>
+      <button id="btn-edit-name" class="btn-secondary">✏️ NAMA</button>
+    </div>
+
+    <!-- Tab Menu -->
+    <div class="tab-menu">
+      <button class="tab-btn active" data-tab="ranking">🏆</button>
+      <button class="tab-btn" data-tab="history">📜</button>
+      <button class="tab-btn" data-tab="achievement">🎖</button>
+      <button class="tab-btn" data-tab="statistics">📊</button>
+      <button class="tab-btn" data-tab="archive">👤</button>
+      <button class="tab-btn" data-tab="chart">📈</button>
+    </div>
+
+    <!-- Tab Content -->
+    <div class="tab-content">
+      <div class="tab-panel active" id="tab-ranking">
+        <div id="ranking-list"></div>
+      </div>
+      <div class="tab-panel hidden" id="tab-history">
+        <div id="history-list"></div>
+      </div>
+      <div class="tab-panel hidden" id="tab-achievement">
+        <div id="achievement-list"></div>
+      </div>
+      <div class="tab-panel hidden" id="tab-statistics">
+        <div id="statistics-list"></div>
+      </div>
+      <div class="tab-panel hidden" id="tab-archive">
+        <div id="archive-list"></div>
+      </div>
+      <div class="tab-panel hidden" id="tab-chart">
+        <canvas id="score-chart"></canvas>
+      </div>
+    </div>
+
+    <!-- AI Commentator -->
+    <div class="ai-comment" id="ai-comment"></div>
+
+    <!-- Reset Button -->
+    <div class="reset-wrap">
+      <button id="btn-reset" class="btn-danger">🗑 RESET GAME</button>
+    </div>
+
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- NEW ROUND SETUP PAGE -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div id="page-newround" class="page hidden">
+    <div class="setup-wrap">
+      <div class="setup-header">
+        <img src="images/joker.png" alt="Logo" class="setup-logo" />
+        <h1 class="setup-title">RONDE BARU</h1>
+        <div id="newround-subtitle" class="setup-sub"></div>
+      </div>
+      <div class="setup-form">
+        <div class="setup-section-title">Nama Pemain</div>
+        <div class="setup-players">
+          <div class="setup-player-row">
+            <span class="setup-player-badge dragon-badge">🐉 P1</span>
+            <input type="text" id="nr-p1" placeholder="Nama Pemain 1" maxlength="16" class="setup-input" />
+          </div>
+          <div class="setup-player-row">
+            <span class="setup-player-badge tiger-badge">🐯 P2</span>
+            <input type="text" id="nr-p2" placeholder="Nama Pemain 2" maxlength="16" class="setup-input" />
+          </div>
+          <div class="setup-player-row">
+            <span class="setup-player-badge eagle-badge">🦅 P3</span>
+            <input type="text" id="nr-p3" placeholder="Nama Pemain 3" maxlength="16" class="setup-input" />
+          </div>
+          <div class="setup-player-row">
+            <span class="setup-player-badge cobra-badge">🐍 P4</span>
+            <input type="text" id="nr-p4" placeholder="Nama Pemain 4" maxlength="16" class="setup-input" />
+          </div>
+        </div>
+        <div class="setup-section-title">Target Kemenangan</div>
+        <div class="setup-target-row" id="nr-target-row">
+          <button class="target-btn" data-val="500">500</button>
+          <button class="target-btn active" data-val="1000">1000</button>
+          <button class="target-btn" data-val="750">750</button>
+          <button class="target-btn" data-val="1500">1500</button>
+        </div>
+        <div class="setup-target-custom">
+          <input type="number" id="nr-custom-target" placeholder="Custom target..." min="100" max="9999" class="setup-input" />
+        </div>
+        <button id="btn-start-newround" class="btn-primary btn-full">🃏 MULAI RONDE BARU</button>
+      </div>
+      <!-- Stars Summary -->
+      <div class="stars-summary" id="nr-stars-summary"></div>
+    </div>
+  </div>
+
+  <!-- Edit Name Modal -->
+  <div id="edit-name-modal" class="modal-overlay hidden">
+    <div class="modal-box">
+      <div class="modal-title">✏️ Edit Nama</div>
+      <div id="edit-name-fields"></div>
+      <div class="modal-btns">
+        <button id="btn-save-names" class="btn-primary">💾 Simpan</button>
+        <button id="btn-cancel-names" class="btn-secondary">✖ Batal</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reset Confirm Modal -->
+  <div id="reset-modal" class="modal-overlay hidden">
+    <div class="modal-box">
+      <div class="modal-title">⚠️ Reset Game</div>
+      <p class="modal-text">Reset seluruh permainan? Statistik dan arsip tetap tersimpan.</p>
+      <div class="modal-btns">
+        <button id="btn-confirm-reset" class="btn-danger">🗑 Ya, Reset</button>
+        <button id="btn-cancel-reset" class="btn-secondary">✖ Batal</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Attack Animation Layer -->
+  <div id="attack-layer" aria-hidden="true"></div>
+
+  <!-- Screen Shake Overlay -->
+  <div id="screen-shake-overlay"></div>
+
+  <!-- Gold Flash (fullscreen win effect) -->
+  <div id="game-gold-flash"></div>
+
+</div><!-- /#app -->
+
+<script src="app.js"></script>
+</body>
+</html>

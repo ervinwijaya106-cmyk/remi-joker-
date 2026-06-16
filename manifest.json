@@ -1,0 +1,32 @@
+{
+  "name": "Score Cekih — Sadewa Corp",
+  "short_name": "Score Cekih",
+  "description": "Aplikasi pencatat skor kartu premium oleh Sadewa Corp",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0f2d0f",
+  "theme_color": "#1a3a1a",
+  "lang": "id",
+  "icons": [
+    {
+      "src": "images/joker.ico",
+      "sizes": "64x64",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "images/joker.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "images/joker.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["games", "entertainment"],
+  "screenshots": []
+}
