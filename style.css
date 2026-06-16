@@ -407,7 +407,7 @@ input { outline: none; border: none; }
 /* INNER CARD LAYER */
 .player-card {
   width: 160px;
-  height: 168px;
+  height: 150px;
   position: relative;
   border-radius: 8px;
   overflow: hidden;
