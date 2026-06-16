@@ -391,6 +391,7 @@ input { outline: none; border: none; }
 .player-frame {
   width: 180px;
   height: 190px;
+  transform: translateY(8px);
   position: relative;
   display: flex;
   align-items: center;
